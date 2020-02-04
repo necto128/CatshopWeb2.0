@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <filter>
+        <filter-name>FilterEncoding</filter-name>
+        <filter-class>filter.FilterEncoding</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--главная страница-->
+    <servlet>
+        <servlet-name>ServletShow</servlet-name>
+        <servlet-class>servlets.ServletShow</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletShow</servlet-name>
+        <url-pattern>/ServletShow</url-pattern>
+    </servlet-mapping>
+
+    <!--сервлет до создания кота-->
+    <servlet>
+        <servlet-name>ServletInitAddCat</servlet-name>
+        <servlet-class>servlets.ServletInitAddCat</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletInitAddCat</servlet-name>
+        <url-pattern>/initAddCat</url-pattern>
+    </servlet-mapping>
+
+    <!--сервлет создания кота-->
+    <servlet>
+        <servlet-name>ServletAddCat</servlet-name>
+        <servlet-class>servlets.ServletAddCat</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletAddCat</servlet-name>
+        <url-pattern>/ServletAddCat</url-pattern>
+    </servlet-mapping>
+
+    <!--сервлет просмотра-->
+    <servlet>
+        <servlet-name>ServletCheck</servlet-name>
+        <servlet-class>servlets.ServletCheck</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletCheck</servlet-name>
+        <url-pattern>/ServletCheck</url-pattern>
+    </servlet-mapping>
+
+    <!--сервлет на обновление записи-->
+    <servlet>
+        <servlet-name>ServletUpdataCats</servlet-name>
+        <servlet-class>servlets.ServletUpdataCats</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUpdataCats</servlet-name>
+        <url-pattern>/ServletUpdata</url-pattern>
+    </servlet-mapping>
+
+    <!--сервлет удаления записи-->
+    <servlet>
+        <servlet-name>ServletDelete</servlet-name>
+        <servlet-class>servlets.ServletDelete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletDelete</servlet-name>
+        <url-pattern>/ServletDelete</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/Error.jsp</location>
+    </error-page>
+</web-app>
