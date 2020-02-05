@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ServletCheck")
@@ -20,6 +21,8 @@ public class ServletCheck extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         try {
             checkCat(request, response);
         } catch (ClassNotFoundException | SQLException e) {
@@ -29,7 +32,8 @@ public class ServletCheck extends HttpServlet {
 
     private void checkCat(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
         int idCat = Integer.parseInt(request.getParameter("check"));
-        List<Cat> listcat = CatDAO.searchCatsById(idCat);
+        List<Cat> listcat = new ArrayList<>();
+        listcat.add(CatDAO.searchCatsById(idCat));
         List<Cat> listcats = CatDAO.dataOutput();
         request.setAttribute("listcat", listcat);
         request.setAttribute("listcats", listcats);

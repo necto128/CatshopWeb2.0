@@ -53,10 +53,9 @@ public class CatDAO {
     }
 /////////////////////////////////ПОИСК ЗАПИСИ
 
-    public static List<Cat> searchCatsById(int cat1) {
+    public static Cat searchCatsById(int cat1) {
         ResultSet rs;
-        List<Cat> listcat = new ArrayList<>();
-
+        Cat cat = null;
         String Select = "SELECT *FROM " + Const.USER_TABLE + " WHERE id=" + cat1;
 
         try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(Select)) {
@@ -68,13 +67,13 @@ public class CatDAO {
                 int iddad = rs.getInt("id_dad");
                 int idmam = rs.getInt("id_mam");
                 String gender = rs.getString("gender");
-                Cat cat = new Cat(idCat, nameCat, iddad, idmam, gender);
-                listcat.add(cat);
+                cat = new Cat(idCat, nameCat, iddad, idmam, gender);
+
             }
 
         } catch (Exception e) {
         }
-        return listcat;
+        return cat;
     }
 ////////////////////////////////////////ОБНОВЛЕНИЕ ЗАПИСИ
 

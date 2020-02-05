@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ServletDelete")
@@ -26,7 +27,8 @@ public class ServletDelete extends HttpServlet {
 
     private void deleteCat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idCat = Integer.parseInt(request.getParameter("delete"));
-        List<Cat> listcat = CatDAO.searchCatsById(idCat);
+        List<Cat> listcat = new ArrayList<>();
+        listcat.add(CatDAO.searchCatsById(idCat));
         request.setAttribute("listcat", listcat);
         RequestDispatcher dispatcher = request.getRequestDispatcher("ShowDeleteCats.jsp");
         CatDAO.deleteRecord(idCat);

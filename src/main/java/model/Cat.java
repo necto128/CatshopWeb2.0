@@ -37,7 +37,6 @@ public class Cat {
         this.gender = gender;
     }
 
-
     public int getIdCat() {
         return idCat;
     }
