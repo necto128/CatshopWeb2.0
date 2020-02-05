@@ -28,9 +28,8 @@ public class ServletCheck extends HttpServlet {
     }
 
     private void checkCat(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("check"));
-        Cat cat = new Cat(id);
-        List<Cat> listcat = CatDAO.searchCatsById(cat);
+        int idCat = Integer.parseInt(request.getParameter("check"));
+        List<Cat> listcat = CatDAO.searchCatsById(idCat);
         List<Cat> listcats = CatDAO.dataOutput();
         request.setAttribute("listcat", listcat);
         request.setAttribute("listcats", listcats);

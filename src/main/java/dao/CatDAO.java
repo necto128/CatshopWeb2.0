@@ -6,7 +6,6 @@ import model.Cat;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +34,10 @@ public class CatDAO {
     public static List<Cat> dataOutput() throws SQLException, ClassNotFoundException {
         ResultSet rs;
         List<Cat> listcat = new ArrayList<>();
-        try (Statement st = ConnectionDb.getDbConnection().createStatement();) {
+        String Select = "SELECT *FROM " + Const.USER_TABLE;
+        try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(Select)) {
 
-            String Select = "SELECT *FROM " + Const.USER_TABLE;
-
-            rs = st.executeQuery(Select);
+            rs = st.executeQuery();
 
             while (rs.next()) {
                 int idCat = rs.getInt("id");
@@ -55,13 +53,15 @@ public class CatDAO {
     }
 /////////////////////////////////ПОИСК ЗАПИСИ
 
-    public static List<Cat> searchCatsById(Cat cat1) {
+    public static List<Cat> searchCatsById(int cat1) {
         ResultSet rs;
         List<Cat> listcat = new ArrayList<>();
-        try (Statement st = ConnectionDb.getDbConnection().createStatement();) {
-            String Select = "SELECT *FROM " + Const.USER_TABLE + " WHERE id=" + cat1.getIdCat();
 
-            rs = st.executeQuery(Select);
+        String Select = "SELECT *FROM " + Const.USER_TABLE + " WHERE id=" + cat1;
+
+        try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(Select)) {
+
+            rs = st.executeQuery();
             while (rs.next()) {
                 int idCat = rs.getInt("id");
                 String nameCat = rs.getString("name_cat");
@@ -80,11 +80,10 @@ public class CatDAO {
 
     public static void updataCats(Cat cat) {
 
-        try (Statement st = ConnectionDb.getDbConnection().createStatement();) {
+        String updata = "UPDATE " + Const.USER_TABLE + " set name_cat='" + cat.getNameCat() + "',id_dad='" + cat.getIdDad() + "',id_mam='" + cat.getIdMam() + "' WHERE id=" + cat.getIdCat();
+        try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(updata)) {
 
-
-            String updata = "UPDATE " + Const.USER_TABLE + " set name_cat='" + cat.getNameCat() + "',id_dad='" + cat.getIdDad() + "',id_mam='" + cat.getIdMam() + "' WHERE id=" + cat.getIdCat();
-            st.executeUpdate(updata);
+            st.executeUpdate();
 
             System.out.println("///////////////////////////////////\n");
         } catch (Exception e) {
@@ -94,11 +93,10 @@ public class CatDAO {
     //SELECT EXISTS(SELECT id FROM table WHERE id = 1
     /////////////////////////////////УДАЛЕНИЕ ЗАПИСИ
 
-    public static void deleteRecord(Cat cat) {
-
-        try (Statement prSt = ConnectionDb.getDbConnection().createStatement();) {
-            String delete = "DELETE FROM " + Const.USER_TABLE + " WHERE id=" + cat.getIdCat();
-            prSt.executeUpdate(delete);
+    public static void deleteRecord(int cat) {
+        String delete = "DELETE FROM " + Const.USER_TABLE + " WHERE id=" + cat;
+        try (PreparedStatement prSt = ConnectionDb.getDbConnection().prepareStatement(delete)) {
+            prSt.executeUpdate();
         } catch (Exception e) {
         }
 

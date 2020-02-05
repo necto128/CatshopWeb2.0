@@ -16,23 +16,20 @@ import java.util.List;
 @WebServlet(name = "ServletDelete")
 public class ServletDelete extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-doGet(request,response);
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            deleteCat(request, response);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+        deleteCat(request, response);
+
     }
-    private void deleteCat(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("delete"));
-        Cat cat = new Cat(id);
-        List<Cat> listcat = CatDAO.searchCatsById(cat);
+
+    private void deleteCat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idCat = Integer.parseInt(request.getParameter("delete"));
+        List<Cat> listcat = CatDAO.searchCatsById(idCat);
         request.setAttribute("listcat", listcat);
         RequestDispatcher dispatcher = request.getRequestDispatcher("ShowDeleteCats.jsp");
-        CatDAO.deleteRecord(cat);
+        CatDAO.deleteRecord(idCat);
         dispatcher.forward(request, response);
     }
 }
