@@ -56,10 +56,10 @@ public class CatDAO {
     public static Cat searchCatsById(int cat1) {
         ResultSet rs;
         Cat cat = null;
-        String Select = "SELECT *FROM " + Const.USER_TABLE + " WHERE id=" + cat1;
+        String Select = "SELECT *FROM " + Const.USER_TABLE + " WHERE id=?";
 
         try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(Select)) {
-
+            st.setInt(1, cat1);
             rs = st.executeQuery();
             while (rs.next()) {
                 int idCat = rs.getInt("id");
@@ -79,10 +79,13 @@ public class CatDAO {
 
     public static void updataCats(Cat cat) {
 
-        String updata = "UPDATE " + Const.USER_TABLE + " set name_cat='" + cat.getNameCat() + "',id_dad='" + cat.getIdDad() + "',id_mam='" + cat.getIdMam() + "' WHERE id=" + cat.getIdCat();
-        try (PreparedStatement st = ConnectionDb.getDbConnection().prepareStatement(updata)) {
-
-            st.executeUpdate();
+        String updata = "UPDATE " + Const.USER_TABLE + " set " + Const.NAME_CAT + "=?," + Const.ID_DAD + "=?," + Const.ID_MAM + "=? WHERE id=?";
+        try (PreparedStatement prSt = ConnectionDb.getDbConnection().prepareStatement(updata)) {
+            prSt.setString(1, cat.getNameCat());
+            prSt.setInt(2, cat.getIdDad());
+            prSt.setInt(3, cat.getIdMam());
+            prSt.setInt(4, cat.getIdCat());
+            prSt.executeUpdate();
 
             System.out.println("///////////////////////////////////\n");
         } catch (Exception e) {
@@ -93,8 +96,9 @@ public class CatDAO {
     /////////////////////////////////УДАЛЕНИЕ ЗАПИСИ
 
     public static void deleteRecord(int cat) {
-        String delete = "DELETE FROM " + Const.USER_TABLE + " WHERE id=" + cat;
+        String delete = "DELETE FROM " + Const.USER_TABLE + " WHERE id=?";
         try (PreparedStatement prSt = ConnectionDb.getDbConnection().prepareStatement(delete)) {
+            prSt.setInt(1, cat);
             prSt.executeUpdate();
         } catch (Exception e) {
         }
